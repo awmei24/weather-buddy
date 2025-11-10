@@ -6,6 +6,23 @@ import './App.css'
 function App() {
   return (
     <>
+      <div className='window'>
+        <div className='header'>
+          <div className='time'>
+            <Clock />
+          </div>
+          <div className='search'></div>
+          <div className='menu'></div>
+        </div>
+        <div className='characterPane'>
+          <div></div>
+        </div>
+        <div className='infoPane'>
+          <div className='locationWeather'>
+            <LocationWeather />
+          </div>
+        </div>
+      </div>
     </>
   )
 }
