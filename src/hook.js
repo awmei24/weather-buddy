@@ -1,58 +1,68 @@
 import { useState, useEffect } from 'react';
 
+const WEATHER_API_KEY =
+    import.meta.env.VITE_WEATHER_API_KEY;
+
 export function useTime() {
-  const [time, setTime] = useState(new Date());
+    const [time, setTime] = useState(new Date());
 
-  useEffect(() => {
-    const interval = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(interval);
-  }, []);
+    useEffect(() => {
+        const interval = setInterval(() => setTime(new Date()), 1000);
+        return () => clearInterval(interval);
+    }, []);
 
-  return time;
+    return time;
 }
 
 export function useLocation() {
-  const [location, setLocation] = useState(null);
-  const [error, setError] = useState(null);
+    const [location, setLocation] = useState(null);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function fetchLocation() {
-      try {
-        const res = await fetch('https://ipapi.co/json/');
-        const data = await res.json();
-        setLocation(data);
-      } catch (err) {
-        setError(err);
-      }
-    }
-    fetchLocation();
-  }, []);
+    useEffect(() => {
+        async function fetchLocation() {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                setLocation(data);
+                console.log('Location data:', data);
+            } catch (err) {
+                setError(err);
+                console.error('Location error:', err);
+            }
+        }
+        fetchLocation();
+    }, []);
 
-  return { location, error };
+    console.log('Location state:', location, error);
+
+    return { location, error };
 }
 
-export function useWeather(city) {
-  const [weather, setWeather] = useState(null);
-  const [error, setError] = useState(null);
-  const API_KEY = 'API_KEY';
+export function useWeather(latitude, longitude) {
+    const [allWeather, setAllWeather] = useState(null);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (!city) return;
+    useEffect(() => {
+        if (!latitude || !longitude) return;
 
-    async function fetchWeather() {
-      try {
-        const res = await fetch(
-          `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${encodeURIComponent(city)}`
-        );
-        const data = await res.json();
-        setWeather(data);
-      } catch (err) {
-        setError(err);
-      }
-    }
+        async function fetchAllWeather() {
+            try {
+                const query = `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${latitude},${longitude}`;
+                console.log('Weather query:', query);
 
-    fetchWeather();
-  }, [city]);
+                const res = await fetch(query);
+                const data = await res.json();
+                setAllWeather(data);
+            } catch (err) {
+                setError(err);
+                console.error('Weather error:', err);
+            }
+        }
 
-  return { weather, error };
+        fetchAllWeather();
+    }, [latitude, longitude]);
+
+    console.log('Weather state:', allWeather, error);
+
+    return { allWeather, error };
 }
