@@ -11,15 +11,15 @@ function App() {
           <div className='time'>
             <Clock timeFormat='12hr'/>
           </div>
-          <div className='search'></div>
-          <div className='menu'></div>
+          <div>
+            <div className='search'></div>
+            <div className='menu'></div>
+          </div>
         </div>
-        <div className='characterPane'>
-          <div></div>
-        </div>
+        <div className='characterPane'></div>
         <div className='infoPane'>
           <div className='locationWeather'>
-            <LocationWeather />
+            {/* <LocationWeather /> */}
           </div>
         </div>
       </div>
