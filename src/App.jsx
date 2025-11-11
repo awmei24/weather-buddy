@@ -9,7 +9,7 @@ function App() {
       <div className='window'>
         <div className='header'>
           <div className='time'>
-            <Clock />
+            <Clock timeFormat='12hr'/>
           </div>
           <div className='search'></div>
           <div className='menu'></div>
