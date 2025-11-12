@@ -4,7 +4,7 @@ import { useLocation, useWeather } from '../hook.js';
 export function LocationWeather() {
   const { location, error: locationError } = useLocation();
 
-  // location?.latitude might be undefined depending on API shape — log to check
+  // location?.latitude might be undefined
   console.log('Location info:', location);
 
   const latitude = location?.latitude;
@@ -20,9 +20,13 @@ export function LocationWeather() {
   if (weatherError) return <div>Failed to load weather.</div>;
   if (!allWeather) return <div>Loading weather...</div>;
 
+  const city = allWeather.location.name
+  const region = allWeather.location.region
+
   const tempC = allWeather.current.temp_c + '°C';
   const tempF = allWeather.current.temp_f + '°F';
   const temp = tempC ? tempC : tempF  // TODO: change condition for settings options
+  
   const conditionText = allWeather.current.condition.text;
   const isDay = allWeather.current.is_day === 1;
 
@@ -36,7 +40,7 @@ export function LocationWeather() {
     <>
       <div className='info-left'>
         <div className='location'>
-          {location.city}, {location.region}, {location.country}
+          {city}, {region}
         </div>
         <div className='condition'>
           Condition: {conditionText}

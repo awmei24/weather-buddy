@@ -21,7 +21,7 @@ export function useLocation() {
     useEffect(() => {
         async function fetchLocation() {
             try {
-                const res = await fetch('https://ipapi.co/json/');
+                const res = await fetch('https://free.freeipapi.com/api/json/');
                 const data = await res.json();
                 setLocation(data);
                 console.log('Location data:', data);
@@ -32,8 +32,6 @@ export function useLocation() {
         }
         fetchLocation();
     }, []);
-
-    console.log('Location state:', location, error);
 
     return { location, error };
 }
