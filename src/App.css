@@ -14,6 +14,7 @@ body,
     background-color: #f0f0f0;
 }
 
+/* Header general */
 .header {
   display: flex;
   justify-content: space-between;
@@ -34,17 +35,18 @@ body,
   position: relative;
 }
 
-/* The rounded white search box */
+/* Rounded search box */
 .search-box {
+  position: relative;
   display: flex;
   align-items: center;
   background-color: white;
-  height: 50px;
+  height: 80%;
   border-radius: 25px;
   border: 1px solid #ccc;
   overflow: hidden;
-  width: 30px; /* collapsed size (just icon) */
-  padding: 0 16px;
+  width: 30px; 
+  padding: 10px 16px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   transition: width 0.4s ease-in, box-shadow 0.3s ease-in;
   cursor: pointer;
@@ -91,14 +93,54 @@ body,
   transition: width 0.4s ease-out, opacity 0.3s ease-out;
 }
 
-/* Menu just for spacing */
+.search-input {
+  border: none;
+  outline: none;
+  flex: 1;
+  height: 100%;
+  padding: 0 1rem;
+  font-size: 0.95rem;
+}
+
+.search-results-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 250px;
+  background: #fff;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.search-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search-result-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border-color: #f0f0f0;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+}
+
+.search-result-item:hover {
+  background: #f0f0f0;
+}
+
+/* TODO: Menu */
 .menu {
   cursor: pointer;
   font-weight: 500;
   color: #333;
 }
 
-
+/* TODO: Character pane */
 .characterPane {
     flex: 1;
     width: 100%;
@@ -112,6 +154,7 @@ body,
     box-sizing: border-box;
 }
 
+/* TODO: Info pane */
 .infoPane {
     flex: 0 0 25%;
     width: 100%;

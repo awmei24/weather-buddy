@@ -64,3 +64,30 @@ export function useWeather(latitude, longitude) {
 
     return { allWeather, error };
 }
+
+export function useAutocomplete(query) {
+    const [suggestions, setSuggestions] = useState([]);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        if (!query) {
+            setSuggestions([]);
+            return;
+        }
+
+        async function fetchSuggestions() {
+            try {
+                const res = await fetch(`https://api.weatherapi.com/v1/search.json?key=${WEATHER_API_KEY}&q=${query}`);
+                const data = await res.json();
+                setSuggestions(data);
+            } catch (err) {
+                setError(err);
+                console.error('Autocomplete error:', err);
+            }
+        }
+
+        fetchSuggestions();
+    }, [query]);
+    
+    return { suggestions, error };
+}
