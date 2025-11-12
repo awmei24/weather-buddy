@@ -1,14 +1,14 @@
 import React from 'react';
 import { useLocation, useWeather } from '../hook.js';
 
-export function LocationWeather() {
+export function LocationWeather({ lat: propLat, lon: propLon }) {
   const { location, error: locationError } = useLocation();
 
   // location?.latitude might be undefined
   console.log('Location info:', location);
 
-  const latitude = location?.latitude;
-  const longitude = location?.longitude;
+  const latitude = propLat ?? location?.latitude;
+  const longitude = propLon ?? location?.longitude;
 
   const { allWeather, error: weatherError } = useWeather(latitude, longitude);
   console.log('Weather info:', allWeather);

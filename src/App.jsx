@@ -7,12 +7,22 @@ import searchIcon from './assets/search_icon.svg';
 
 function App() {
   const [searchValue, setSearchValue] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
   const handleSearch = (e) => {
     e.preventDefault();
+    if (!searchValue) return;
+    setSelectedLocation({ name: searchValue });
+    setSearchValue(''); // clear input
     console.log('Searching for:', searchValue);
+  };
+
+  const handleSelectResult = (location) => {
+    setSelectedLocation(location);
+    setSearchValue(''); // clear input
+    console.log('Selected location:', location);
   };
 
   const showDropdown = (isHovered || isFocused) && searchValue.length > 0;
@@ -48,7 +58,7 @@ function App() {
 
             {showDropdown && (
               <div className='search-results-dropdown'>
-                <SearchResults query={searchValue} />
+                <SearchResults query={searchValue} onSelect={handleSelectResult} />
               </div>
             )}
           </div>
@@ -59,7 +69,10 @@ function App() {
 
       <div className='characterPane'>Character Pane</div>
       <div className='infoPane'>
-        <LocationWeather />
+        <LocationWeather
+          lat={selectedLocation?.lat ?? null}
+          lon={selectedLocation?.lon ?? null}
+        />
       </div>
     </div>
   );

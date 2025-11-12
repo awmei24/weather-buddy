@@ -1,6 +1,6 @@
 import { useAutocomplete } from '../hook.js';
 
-export function SearchResults({ query }) {
+export function SearchResults({ query, onSelect }) {
     const { suggestions, error } = useAutocomplete(query);
     
     if (error) return <div className='search-error'>No suggestions found.</div>;
@@ -10,8 +10,11 @@ export function SearchResults({ query }) {
 
     return (
         <ul className='search-results'>
-            {suggestions.map((item) => (
-                <li key={item.id} className='search-result-item'>
+            {suggestions.slice(0,5).map((item) => (
+                <li key={item.id} 
+                    className='search-result-item'
+                    onMouseDown={() => onSelect({ lat: item.lat, lon: item.lon })}
+                >
                     {item.name}, {item.region}, {item.country}
                 </li>
             ))}
