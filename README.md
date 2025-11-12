@@ -6,7 +6,7 @@ a little animated desktop friend that changes with the weather
 
 - [x] create github repo
 - [x] react tutorials
-- [ ] create front end base
+- [x] create front end base
 - [x] api connections
 - [ ] stylesheet
 - [ ] add characters

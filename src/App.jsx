@@ -11,7 +11,7 @@ function App() {
           <div className='time'>
             <Clock timeFormat='12hr'/>
           </div>
-          <div>
+          <div className = 'header-right'>
             <div className='search'>
               Search
             </div>
@@ -24,9 +24,7 @@ function App() {
           Character Pane
         </div>
         <div className='infoPane'>
-          <div className='locationWeather'>
-            <LocationWeather />
-          </div>
+          <LocationWeather />
         </div>
       </div>
     </>

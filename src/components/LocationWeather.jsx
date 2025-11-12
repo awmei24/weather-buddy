@@ -20,26 +20,32 @@ export function LocationWeather() {
   if (weatherError) return <div>Failed to load weather.</div>;
   if (!allWeather) return <div>Loading weather...</div>;
 
-  const tempC = allWeather.current.temp_c;
-  const tempF = allWeather.current.temp_f;
+  const tempC = allWeather.current.temp_c + '°C';
+  const tempF = allWeather.current.temp_f + '°F';
+  const temp = tempC ? tempC : tempF  // TODO: change condition for settings options
   const conditionText = allWeather.current.condition.text;
   const isDay = allWeather.current.is_day === 1;
 
   if (isDay) {
-    document.body.style.backgroundColor = '#87CEEB'; // light blue for day
+    document.body.style.backgroundColor = '#87CEEB'; // light blue for day; TODO: change for day theme
   } else {
-    document.body.style.backgroundColor = '#2c3e50'; // dark blue for night
+    document.body.style.backgroundColor = '#2c3e50'; // dark blue for night; TODO: change for night theme
   }
 
   return (
     <>
-      <div>
-        <p>
+      <div className='info-left'>
+        <div className='location'>
           {location.city}, {location.region}, {location.country}
-        </p>
-        <p>Temperature (C): {tempC}°C</p>
-        <p>Temperature (F): {tempF}°F</p>
-        <p>Condition: {conditionText}</p>
+        </div>
+        <div className='condition'>
+          Condition: {conditionText}
+        </div>
+      </div>
+      <div className='info-right'>
+        <div className='temperature'>
+          Temperature: {temp}
+        </div>
       </div>
     </>
   );
