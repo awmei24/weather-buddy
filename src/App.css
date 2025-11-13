@@ -250,6 +250,98 @@ body,
     transition: opacity 0.3s ease-in;
 }
 
+/* Settings */
+
+.setting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.setting-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+/* Toggle container */
+.toggle-switch {
+  position: relative;
+  width: 90px;
+  height: 36px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  overflow: hidden;
+}
+
+.toggle-switch:hover {
+  background-color: var(--accent-color);
+}
+
+/* Moving thumb */
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.toggle-switch.right .toggle-thumb {
+  transform: translateX(54px);
+}
+
+/* Color variants */
+.toggle-thumb.celsius {
+  background-color: #4db5ff; /* blue */
+}
+
+.toggle-thumb.fahrenheit {
+  background-color: #ff914d; /* orange */
+}
+
+.toggle-thumb.hour12 {
+  background-color: #7d5fff; /* purple */
+}
+
+.toggle-thumb.hour24 {
+  background-color: #00c78b; /* green */
+}
+
+/* Labels inside switch */
+.toggle-option {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  font-weight: 600;
+  pointer-events: none;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.left-label {
+  left: 10px;
+}
+
+.right-label {
+  right: 10px;
+}
+
+/* Day/Night adjustments */
+body.night .toggle-switch:hover {
+  background-color: var(--accent-color);
+}
+
+body.night .toggle-option {
+  color: var(--text-color);
+}
+
 
 /* TODO: Character pane */
 

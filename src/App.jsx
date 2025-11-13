@@ -3,10 +3,10 @@ import { Clock } from './components/Clock.jsx';
 import { LocationWeather } from './components/LocationWeather.jsx';
 import { SearchResults } from './components/Search.jsx';
 import './App.css';
-import searchIconNight from './assets/search_icon-light.svg';
-import searchIconDay from './assets/search_icon.svg';
-import settingsIconNight from './assets/menu_icon-light.svg';
-import settingsIconDay from './assets/menu_icon.svg';
+import searchIconNight from './assets/search_icon-night.svg';
+import searchIconDay from './assets/search_icon-day.svg';
+import settingsIconNight from './assets/settings_icon-night.svg';
+import settingsIconDay from './assets/settings_icon-day.svg';
 
 function App() {
   const [isDay, setIsDay] = useState(null);
@@ -15,6 +15,9 @@ function App() {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+
+  const [isCelsius, setIsCelsius] = useState(true);
+  const [is24Hour, setIs24Hour] = useState(false);
 
   const searchIcon = isDay === true ? searchIconDay : searchIconNight;
   const settingsIcon = isDay === true ? settingsIconDay : settingsIconNight;
@@ -87,14 +90,33 @@ function App() {
 
         <div className={`side-pane ${settingsOpen ? 'open' : ''}`}>
           <div className='side-pane-content'>
-            <ul>
-              <li>Temperature Format</li>
-              <li>Clock Format</li>
-              {/* <li>Character Styles</li> */}
-            </ul>
+            <div className='setting'>
+              <label className='setting-label'>Temperature</label>
+              <div
+                className={`toggle-switch ${isCelsius ? 'left' : 'right'}`}
+                onClick={() => setIsCelsius(!isCelsius)}
+              >
+                <div className={`toggle-thumb ${isCelsius ? 'celsius' : 'fahrenheit'}`} />
+                <span className='toggle-option left-label'>°C</span>
+                <span className='toggle-option right-label'>°F</span>
+              </div>
+            </div>
+
+            <div className='setting'>
+              <label className='setting-label'>Clock Format</label>
+              <div
+                className={`toggle-switch ${is24Hour ? 'right' : 'left'}`}
+                onClick={() => setIs24Hour(!is24Hour)}
+              >
+                <div className={`toggle-thumb ${is24Hour ? 'hour24' : 'hour12'}`} />
+                <span className='toggle-option left-label'>12h</span>
+                <span className='toggle-option right-label'>24h</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
       <div className='info-pane'>
         <LocationWeather
           lat={selectedLocation?.lat ?? null}
