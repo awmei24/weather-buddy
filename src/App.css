@@ -382,3 +382,10 @@ body.night .toggle-option {
     flex-direction: column;
     align-items: flex-end;
 }
+
+.footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 0.5rem;
+    color: var(--text-color);
+}

@@ -125,6 +125,9 @@ function App() {
           isCelsius={ isCelsius }
         />
       </div>
+      <div className='footer'>
+        Powered by <a href="https://www.weatherapi.com/" title="Free Weather API">WeatherAPI.com</a>
+      </div>
     </div>
   );
 }
