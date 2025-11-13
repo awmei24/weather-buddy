@@ -15,6 +15,7 @@ function App() {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [topResult, setTopResult] = useState(null);
 
   const [isCelsius, setIsCelsius] = useState(false);
   const [is24Hour, setIs24Hour] = useState(false);
@@ -34,6 +35,17 @@ function App() {
     setSelectedLocation(location);
     setSearchValue(''); // clear input
     console.log('Selected location:', location);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+
+      if (topResult) {
+        handleSelectResult(topResult);
+        setSearchValue('');  
+      }
+    }
   };
 
   const showDropdown = (isHovered || isFocused) && searchValue.length > 0;
@@ -63,13 +75,14 @@ function App() {
                 onChange={(e) => setSearchValue(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
+                onKeyDown={handleKeyDown}
                 className='search-input'
               />
             </form>
 
             {showDropdown && (
               <div className='search-results-dropdown'>
-                <SearchResults query={searchValue} onSelect={handleSelectResult} />
+                <SearchResults query={searchValue} onSelect={handleSelectResult} onTopResult={setTopResult} />
               </div>
             )}
           </div>

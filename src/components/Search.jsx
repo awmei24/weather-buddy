@@ -1,8 +1,15 @@
+import React, { useEffect } from 'react';
 import { useAutocomplete } from '../hook.js';
 
-export function SearchResults({ query, onSelect }) {
+export function SearchResults({ query, onSelect, onTopResult }) {
     const { suggestions, error } = useAutocomplete(query);
     
+    useEffect(() => {
+      if (suggestions.length > 0 && onTopResult) {
+        onTopResult(suggestions[0]);
+      }
+    }, [suggestions]);
+
     if (error) return <div className='search-error'>No suggestions found.</div>;
     if (!suggestions.length) return <div className='search-no-results'>No suggestions found.</div>;
 
