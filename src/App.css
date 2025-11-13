@@ -27,7 +27,7 @@ body,
 .header-right {
   display: flex;
   align-items: center;
-  gap: 0px;
+  gap: 15px;
 }
 
 /* Search container (relative so animation stays within flow) */
