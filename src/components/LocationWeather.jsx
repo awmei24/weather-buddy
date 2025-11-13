@@ -1,7 +1,7 @@
 import { useLocation, useWeather } from '../hook.js';
 import React, { useEffect } from 'react';
 
-export function LocationWeather({ lat: propLat, lon: propLon }) {
+export function LocationWeather({ lat: propLat, lon: propLon, onDayChange }) {
   const { location, error: locationError } = useLocation();
   const latitude = propLat ?? location?.latitude;
   const longitude = propLon ?? location?.longitude;
@@ -10,12 +10,17 @@ export function LocationWeather({ lat: propLat, lon: propLon }) {
   const isDay = allWeather?.current?.is_day === 1;
 
   useEffect(() => {
+    if (typeof isDay === 'boolean' && onDayChange) {
+      onDayChange(isDay);
+    }
+
+    // Update body theme class too
     if (isDay) {
       document.body.classList.remove('night');
     } else {
       document.body.classList.add('night');
     }
-  }, [isDay]);
+  }, [isDay, onDayChange]);
 
   if (locationError) return <div>Failed to load location.</div>;
   if (!location) return <div>Loading location...</div>;

@@ -3,17 +3,21 @@ import { Clock } from './components/Clock.jsx';
 import { LocationWeather } from './components/LocationWeather.jsx';
 import { SearchResults } from './components/Search.jsx';
 import './App.css';
-import searchIconLight from './assets/search_icon-light.svg';
-import searchIconDark from './assets/search_icon.svg';
-import settingsIconLight from './assets/menu_icon-light.svg';
-import settingsIconDark from './assets/menu_icon.svg';
+import searchIconNight from './assets/search_icon-light.svg';
+import searchIconDay from './assets/search_icon.svg';
+import settingsIconNight from './assets/menu_icon-light.svg';
+import settingsIconDay from './assets/menu_icon.svg';
 
 function App() {
+  const [isDay, setIsDay] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+
+  const searchIcon = isDay === true ? searchIconDay : searchIconNight;
+  const settingsIcon = isDay === true ? settingsIconDay : settingsIconNight;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -47,7 +51,7 @@ function App() {
           >
             <form className={`search-box ${isHovered ? 'active' : ''}`} onSubmit={handleSearch}>
               <span className='search-icon'>
-                <img src={searchIconLight} alt='Search' />
+                <img src={searchIcon} alt='Search' />
               </span>
               <input
                 type='text'
@@ -69,7 +73,7 @@ function App() {
 
           <div className='settings' onClick={() => setSettingsOpen(!settingsOpen)}>
             <span className='settings-icon'>
-              <img src={settingsIconLight} alt='settings' />
+              <img src={settingsIcon} alt='settings' />
             </span>
           </div>
         </div>
@@ -95,6 +99,7 @@ function App() {
         <LocationWeather
           lat={selectedLocation?.lat ?? null}
           lon={selectedLocation?.lon ?? null}
+          onDayChange={(dayValue) => setIsDay(dayValue)}
         />
       </div>
     </div>
