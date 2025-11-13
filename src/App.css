@@ -35,7 +35,6 @@ body,
   position: relative;
 }
 
-/* Rounded search box */
 .search-box {
   position: relative;
   display: flex;
@@ -49,9 +48,8 @@ body,
   cursor: pointer;
 }
 
-/* When hovered (expanded state) */
 .search-box.active {
-  width: 220px; /* expanded width */
+  width: 220px;
   transition: width 0.4s ease-out, box-shadow 0.3s ease-out;
   background-color: white;
   border: 1px solid #ccc;
@@ -63,8 +61,8 @@ body,
   display: flex;
   align-items: center;
   justify-items: center;
-  height: 100%;    /* vertically center */
-  pointer-events: none; /* allows clicks to pass through when collapsed */
+  height: 100%;
+  pointer-events: none; /* click passthru when collapsed */
 }
 
 .search-icon img {
@@ -73,7 +71,7 @@ body,
   object-fit: contain;
 }
 
-/* Input field inside the box */
+/* Input field inside box */
 .search-input {
   border: none;
   outline: none;
@@ -128,20 +126,19 @@ body,
   background: #f0f0f0;
 }
 
-/* TODO: Menu */
+/* Settings */
 .settings {
   cursor: pointer;
   font-weight: 500;
   color: #333;
 }
 
-/* Menu icon styling */
 .settings-icon {
   display: flex;
   align-items: center;
   justify-items: center;
-  height: 100%;    /* vertically center */
-  pointer-events: none; /* allows clicks to pass through when collapsed */
+  height: 100%;   
+  pointer-events: none; /* click passthru when collapsed */
 }
 
 .settings-icon img {
@@ -150,13 +147,13 @@ body,
   object-fit: contain;
 }
 
-/* --- Right Slide Pane --- */
+/* Right side pane */
 .side-pane {
   position: absolute;
   top: 0; 
   right: 0;
   width: 0;
-  height: 100%; /* fill characterPane area */
+  height: 100%; /* fill character-pane area */
   background-color: #fff;
   border-left: 1px solid #ccc;
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
@@ -167,7 +164,7 @@ body,
 }
 
 .side-pane.open {
-  width: 50%; /* expand width */
+  width: 50%;
   transition: width 0.3s ease-out;
 }
 
@@ -206,7 +203,7 @@ body,
   opacity: 0;
   transition: opacity 0.3s ease-in;
   z-index: 4; /* behind pane, above background */
-  pointer-events: none; /* prevents accidental blocking */
+  pointer-events: none;
 }
 
 .side-overlay {
@@ -215,7 +212,7 @@ body,
 }
 
 /* TODO: Character pane */
-.characterPane {
+.character-pane {
     flex: 1;
     width: 100%;
     background-color: #fff;
@@ -229,7 +226,7 @@ body,
 }
 
 /* TODO: Info pane */
-.infoPane {
+.info-pane {
     flex: 0 0 25%;
     width: 100%;
     display: flex;

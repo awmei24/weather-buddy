@@ -73,7 +73,7 @@ function App() {
         </div>
       </div>
 
-      <div className='characterPane'>
+      <div className='character-pane'>
         Character Pane
 
         {/* --- Slide-out settings Pane --- */}
@@ -89,7 +89,7 @@ function App() {
           </div>
         </div>
       </div>
-      <div className='infoPane'>
+      <div className='info-pane'>
         <LocationWeather
           lat={selectedLocation?.lat ?? null}
           lon={selectedLocation?.lon ?? null}
