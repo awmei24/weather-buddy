@@ -4,12 +4,14 @@ import { LocationWeather } from './components/LocationWeather.jsx';
 import { SearchResults } from './components/Search.jsx';
 import './App.css';
 import searchIcon from './assets/search_icon.svg';
+import settingsIcon from './assets/menu_icon.svg';
 
 function App() {
   const [searchValue, setSearchValue] = useState('');
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -63,11 +65,30 @@ function App() {
             )}
           </div>
 
-          <div className='menu'>Menu</div>
+          <div className='settings' onClick={() => setSettingsOpen(!settingsOpen)}>
+            <span className='settings-icon'>
+              <img src={settingsIcon} alt='settings' />
+            </span>
+          </div>
         </div>
       </div>
 
-      <div className='characterPane'>Character Pane</div>
+      <div className='characterPane'>
+        Character Pane
+
+        {/* --- Slide-out settings Pane --- */}
+        {settingsOpen && <div className="side-overlay" onClick={() => setSettingsOpen(false)}></div>}
+
+        <div className={`side-pane ${settingsOpen ? 'open' : ''}`}>
+          <div className='side-pane-content'>
+            <ul>
+              <li>Temperature Format</li>
+              <li>Clock Format</li>
+              {/* <li>Character Styles</li> */}
+            </ul>
+          </div>
+        </div>
+      </div>
       <div className='infoPane'>
         <LocationWeather
           lat={selectedLocation?.lat ?? null}
