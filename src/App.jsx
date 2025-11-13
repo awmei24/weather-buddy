@@ -16,7 +16,7 @@ function App() {
   const [isFocused, setIsFocused] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const [isCelsius, setIsCelsius] = useState(true);
+  const [isCelsius, setIsCelsius] = useState(false);
   const [is24Hour, setIs24Hour] = useState(false);
 
   const searchIcon = isDay === true ? searchIconDay : searchIconNight;
@@ -42,7 +42,7 @@ function App() {
     <div className='window'>
       <div className='header'>
         <div className='time'>
-          <Clock timeFormat='12hr' />
+          <Clock timeFormat={  is24Hour ? '24hr' : '12hr' } />
         </div>
 
         <div className='header-right'>
@@ -122,6 +122,7 @@ function App() {
           lat={selectedLocation?.lat ?? null}
           lon={selectedLocation?.lon ?? null}
           onDayChange={(dayValue) => setIsDay(dayValue)}
+          isCelsius={ isCelsius }
         />
       </div>
     </div>

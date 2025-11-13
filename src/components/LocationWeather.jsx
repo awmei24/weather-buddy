@@ -1,7 +1,7 @@
 import { useLocation, useWeather } from '../hook.js';
 import React, { useEffect } from 'react';
 
-export function LocationWeather({ lat: propLat, lon: propLon, onDayChange }) {
+export function LocationWeather({ lat: propLat, lon: propLon, onDayChange, isCelsius }) {
   const { location, error: locationError } = useLocation();
   const latitude = propLat ?? location?.latitude;
   const longitude = propLon ?? location?.longitude;
@@ -31,7 +31,7 @@ export function LocationWeather({ lat: propLat, lon: propLon, onDayChange }) {
   const region = allWeather.location.region;
   const tempC = allWeather.current.temp_c + '°C';
   const tempF = allWeather.current.temp_f + '°F';
-  const temp = tempC ? tempC : tempF;
+  const temp = isCelsius ? tempC : tempF;
   const conditionText = allWeather.current.condition.text;
 
   return (
