@@ -1,7 +1,5 @@
 :root {
-    /* Default theme (day) */
     --bg-color: #f0f8ff;
-    /* light blueish */
     --text-color: #333;
     --accent-color: #ffffff;
     --border-color: #ccc;
@@ -11,10 +9,9 @@
 
 body.night {
     --bg-color: #2c3e50;
-    /* dark blue */
     --text-color: #f5f5f5;
     --accent-color: #34495e;
-    --border-color: #555;
+    --border-color: #999;
     --shadow-color: rgba(0, 0, 0, 0.5);
     --overlay-color: rgba(0, 0, 0, 0.5);
 }

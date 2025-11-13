@@ -3,8 +3,10 @@ import { Clock } from './components/Clock.jsx';
 import { LocationWeather } from './components/LocationWeather.jsx';
 import { SearchResults } from './components/Search.jsx';
 import './App.css';
-import searchIcon from './assets/search_icon.svg';
-import settingsIcon from './assets/menu_icon.svg';
+import searchIconLight from './assets/search_icon-light.svg';
+import searchIconDark from './assets/search_icon.svg';
+import settingsIconLight from './assets/menu_icon-light.svg';
+import settingsIconDark from './assets/menu_icon.svg';
 
 function App() {
   const [searchValue, setSearchValue] = useState('');
@@ -45,7 +47,7 @@ function App() {
           >
             <form className={`search-box ${isHovered ? 'active' : ''}`} onSubmit={handleSearch}>
               <span className='search-icon'>
-                <img src={searchIcon} alt='Search' />
+                <img src={searchIconLight} alt='Search' />
               </span>
               <input
                 type='text'
@@ -67,7 +69,7 @@ function App() {
 
           <div className='settings' onClick={() => setSettingsOpen(!settingsOpen)}>
             <span className='settings-icon'>
-              <img src={settingsIcon} alt='settings' />
+              <img src={settingsIconLight} alt='settings' />
             </span>
           </div>
         </div>
