@@ -2,7 +2,35 @@ import { useState } from 'react';
 import { Clock } from './components/Clock.jsx';
 import { LocationWeather } from './components/LocationWeather.jsx';
 import { SearchResults } from './components/Search.jsx';
-import './App.css';
+
+import { ThemeProvider } from "styled-components";
+import { dayTheme, GlobalStyle, nightTheme } from "./styles";
+import {
+  AppContainer,
+  Header,
+  HeaderRight,
+  SearchContainer,
+  SearchBox,
+  SearchIcon,
+  SearchInput,
+  SearchResultsDropdown,
+  Settings,
+  SettingsIconWrap,
+  CharacterPane,
+  SidePane,
+  SidePaneContent,
+  SideOverlay,
+  Setting,
+  SettingLabel,
+  ToggleSwitch,
+  ToggleThumb,
+  ToggleOption,
+  LeftLabel,
+  RightLabel,
+  InfoPane,
+  Footer
+} from "./styles";
+
 import searchIconNight from './assets/search_icon-night.svg';
 import searchIconDay from './assets/search_icon-day.svg';
 import settingsIconNight from './assets/settings_icon-night.svg';
@@ -14,6 +42,7 @@ function App() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [topResult, setTopResult] = useState(null);
 
@@ -27,121 +56,142 @@ function App() {
     e.preventDefault();
     if (!searchValue) return;
     setSelectedLocation({ name: searchValue });
-    setSearchValue(''); // clear input
-    console.log('Searching for:', searchValue);
+    setSearchValue('');
   };
 
   const handleSelectResult = (location) => {
     setSelectedLocation(location);
-    setSearchValue(''); // clear input
-    console.log('Selected location:', location);
+    setSearchValue('');
   };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-
       if (topResult) {
         handleSelectResult(topResult);
-        setSearchValue('');  
+        setSearchValue('');
       }
     }
   };
 
-  const showDropdown = (isHovered || isFocused) && searchValue.length > 0;
+  const showDropdown = (isHovered || isFocused) && searchValue.length > 0 && isExpanded;
 
   return (
-    <div className='window'>
-      <div className='header'>
-        <div className='time'>
-          <Clock timeFormat={  is24Hour ? '24hr' : '12hr' } />
-        </div>
-
-        <div className='header-right'>
-          {/* --- Search Section --- */}
-          <div
-            className='search-container'
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <form className={`search-box ${isHovered ? 'active' : ''}`} onSubmit={handleSearch}>
-              <span className='search-icon'>
-                <img src={searchIcon} alt='Search' />
-              </span>
-              <input
-                type='text'
-                placeholder='Search location...'
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                onKeyDown={handleKeyDown}
-                className='search-input'
-              />
-            </form>
-
-            {showDropdown && (
-              <div className='search-results-dropdown'>
-                <SearchResults query={searchValue} onSelect={handleSelectResult} onTopResult={setTopResult} />
-              </div>
-            )}
+    <ThemeProvider theme={isDay === false ? nightTheme : dayTheme}>
+      <GlobalStyle />
+      <AppContainer>
+        <Header>
+          <div className='time'>
+            <Clock timeFormat={is24Hour ? '24hr' : '12hr'} />
           </div>
 
-          <div className='settings' onClick={() => setSettingsOpen(!settingsOpen)}>
-            <span className='settings-icon'>
-              <img src={settingsIcon} alt='settings' />
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div className='character-pane'>
-        Character Pane
-
-        {/* --- Slide-out settings Pane --- */}
-        {settingsOpen && <div className="side-overlay" onClick={() => setSettingsOpen(false)}></div>}
-
-        <div className={`side-pane ${settingsOpen ? 'open' : ''}`}>
-          <div className='side-pane-content'>
-            <div className='setting'>
-              <label className='setting-label'>Temperature</label>
-              <div
-                className={`toggle-switch ${isCelsius ? 'left' : 'right'}`}
-                onClick={() => setIsCelsius(!isCelsius)}
+          <HeaderRight>
+            <SearchContainer
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <SearchBox
+                active={isHovered || isFocused}
+                onTransitionEnd={(e) => {
+                  // Only trigger when the width transition ends
+                  if (e.propertyName === 'width') {
+                    setIsExpanded(isHovered || isFocused); // mark as expanded when hover/focus active
+                  }
+                }}
               >
-                <div className={`toggle-thumb ${isCelsius ? 'celsius' : 'fahrenheit'}`} />
-                <span className='toggle-option left-label'>°C</span>
-                <span className='toggle-option right-label'>°F</span>
-              </div>
-            </div>
+                <SearchIcon>
+                  <img src={searchIcon} alt='Search' />
+                </SearchIcon>
 
-            <div className='setting'>
-              <label className='setting-label'>Clock Format</label>
-              <div
-                className={`toggle-switch ${is24Hour ? 'right' : 'left'}`}
-                onClick={() => setIs24Hour(!is24Hour)}
-              >
-                <div className={`toggle-thumb ${is24Hour ? 'hour24' : 'hour12'}`} />
-                <span className='toggle-option left-label'>12h</span>
-                <span className='toggle-option right-label'>24h</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                <SearchInput
+                  type='text'
+                  placeholder='Search location...'
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => {
+                    setIsFocused(false);
+                    setIsExpanded(false); // collapse when focus lost
+                  }}
+                  onKeyDown={handleKeyDown}
+                  active={isHovered || isFocused}
+                />
+              </SearchBox>
 
-      <div className='info-pane'>
-        <LocationWeather
-          lat={selectedLocation?.lat ?? null}
-          lon={selectedLocation?.lon ?? null}
-          onDayChange={(dayValue) => setIsDay(dayValue)}
-          isCelsius={ isCelsius }
-        />
-      </div>
-      <div className='footer'>
-        Powered by <a href="https://www.weatherapi.com/" title="Free Weather API">WeatherAPI.com</a>
-      </div>
-    </div>
+              {/* Dropdown only shows after search box is fully expanded */}
+              {(showDropdown && isExpanded) && (
+                <SearchResultsDropdown>
+                  <SearchResults 
+                    query={searchValue} 
+                    onSelect={handleSelectResult} 
+                    onTopResult={setTopResult} 
+                  />
+                </SearchResultsDropdown>
+              )}
+            </SearchContainer>
+
+
+            <Settings onClick={() => setSettingsOpen(!settingsOpen)}>
+              <SettingsIconWrap>
+                <img src={settingsIcon} alt='settings' />
+              </SettingsIconWrap>
+            </Settings>
+
+          </HeaderRight>
+        </Header>
+
+        <CharacterPane>
+          Character Pane
+
+          {settingsOpen && <SideOverlay onClick={() => setSettingsOpen(false)} />}
+
+          <SidePane open={settingsOpen}>
+            <SidePaneContent open={settingsOpen}>
+              
+              <Setting>
+                <SettingLabel>Temperature</SettingLabel>
+                <ToggleSwitch
+                  side={isCelsius ? 'left' : 'right'}
+                  onClick={() => setIsCelsius(!isCelsius)}
+                >
+                  <ToggleThumb mode={isCelsius ? 'celsius' : 'fahrenheit'} />
+                  <LeftLabel>°C</LeftLabel>
+                  <RightLabel>°F</RightLabel>
+                </ToggleSwitch>
+              </Setting>
+
+              <Setting>
+                <SettingLabel>Clock Format</SettingLabel>
+                <ToggleSwitch
+                  side={is24Hour ? 'right' : 'left'}
+                  onClick={() => setIs24Hour(!is24Hour)}
+                >
+                  <ToggleThumb mode={is24Hour ? 'hour24' : 'hour12'} />
+                  <LeftLabel>12h</LeftLabel>
+                  <RightLabel>24h</RightLabel>
+                </ToggleSwitch>
+              </Setting>
+
+            </SidePaneContent>
+          </SidePane>
+
+        </CharacterPane>
+
+        <InfoPane>
+          <LocationWeather
+            lat={selectedLocation?.lat ?? null}
+            lon={selectedLocation?.lon ?? null}
+            onDayChange={(dayValue) => setIsDay(dayValue)}
+            isCelsius={isCelsius}
+          />
+        </InfoPane>
+
+        <Footer>
+          Powered by <a href="https://www.weatherapi.com/" title="Free Weather API">WeatherAPI.com</a>
+        </Footer>
+
+      </AppContainer>
+    </ThemeProvider>
   );
 }
 

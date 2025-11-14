@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { SearchResultList, SearchResultItem } from '../styles.js';
 import { useAutocomplete } from '../hook.js';
 
 export function SearchResults({ query, onSelect, onTopResult }) {
@@ -16,15 +17,14 @@ export function SearchResults({ query, onSelect, onTopResult }) {
     console.log(suggestions)
 
     return (
-        <ul className='search-results'>
+        <SearchResultList>
             {suggestions.slice(0,5).map((item) => (
-                <li key={item.id} 
-                    className='search-result-item'
+                <SearchResultItem key={item.id} 
                     onMouseDown={() => onSelect({ lat: item.lat, lon: item.lon })}
                 >
                     {item.name}, {item.region}, {item.country}
-                </li>
+                </SearchResultItem>
             ))}
-        </ul>
+        </SearchResultList>
     );
 }
