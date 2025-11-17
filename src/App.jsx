@@ -24,7 +24,6 @@ import {
   SettingLabel,
   ToggleSwitch,
   ToggleThumb,
-  ToggleOption,
   LeftLabel,
   RightLabel,
   InfoPane,
@@ -51,13 +50,6 @@ function App() {
 
   const searchIcon = isDay === true ? searchIconDay : searchIconNight;
   const settingsIcon = isDay === true ? settingsIconDay : settingsIconNight;
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (!searchValue) return;
-    setSelectedLocation({ name: searchValue });
-    setSearchValue('');
-  };
 
   const handleSelectResult = (location) => {
     setSelectedLocation(location);
