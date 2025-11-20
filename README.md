@@ -8,14 +8,14 @@ a little animated desktop friend that changes with the weather
 - [x] react tutorials
 - [x] create front end base
 - [x] api connections
-- [ ] stylesheet
+- [x] stylesheet
 - [ ] add characters
 
 ## ui / design
 
-- [ ] general ui mockups
+- [x] general ui mockups
   - [x] paper
-  - [ ] figma
+  - [x] figma
 - [ ] design base character
 - [ ] design character variations by weather
 - [ ] animate character

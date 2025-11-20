@@ -1,5 +1,12 @@
 import { useLocation, useWeather } from '../hook.js';
 import React, { useEffect } from 'react';
+import { 
+  InfoLeft, 
+  InfoRight, 
+  Location, 
+  Condition, 
+  Temperature 
+} from '../styles.js'
 
 export function LocationWeather({ lat: propLat, lon: propLon, onDayChange, isCelsius }) {
   const { location, error: locationError } = useLocation();
@@ -29,26 +36,32 @@ export function LocationWeather({ lat: propLat, lon: propLon, onDayChange, isCel
 
   const city = allWeather.location.name;
   const region = allWeather.location.region;
-  const tempC = allWeather.current.temp_c + '°C';
-  const tempF = allWeather.current.temp_f + '°F';
+
+  const tempC = allWeather.current.temp_c;
+  const tempF = allWeather.current.temp_f;
   const temp = isCelsius ? tempC : tempF;
+  const tempType = isCelsius ? '°C' : '°F';
+  
   const conditionText = allWeather.current.condition.text;
 
   return (
     <>
-      <div className='info-left'>
-        <div className='location'>
+      <InfoLeft>
+        <Location>
           {city}, {region}
+        </Location>
+        <Condition>
+          {conditionText}
+        </Condition>
+      </InfoLeft>
+      <InfoRight>
+        <Temperature>
+          {temp}
+        </Temperature>
+        <div className='temp-type'>
+          {tempType}
         </div>
-        <div className='condition'>
-          Condition: {conditionText}
-        </div>
-      </div>
-      <div className='info-right'>
-        <div className='temperature'>
-          Temperature: {temp}
-        </div>
-      </div>
+      </InfoRight>
     </>
   );
 }

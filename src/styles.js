@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: "Jersey 15", sans-serif;
+    font-size: 24px;
   }
 `;
 
@@ -48,6 +49,7 @@ export const Header = styled.header`
   align-items: center;
   padding: 16px;
   height: 10vh;
+  max-height: 200px
 `;
 
 export const HeaderRight = styled.div`
@@ -198,7 +200,7 @@ export const Setting = styled.div`
 
 export const SettingLabel = styled.label`
   color: ${({ theme }) => theme.text};
-  font-weight: 500;
+  font-weight: 800;
 `;
 
 export const ToggleSwitch = styled.div`
@@ -262,7 +264,30 @@ export const InfoPane = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-height: 200px
 `;
+
+export const InfoLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const Location = styled.div`
+  font-size: 20px;
+`
+
+export const Condition = styled.div`
+  font-size: 28px
+`
+
+export const InfoRight = styled.div`
+  display: flex;
+`
+
+export const Temperature = styled.div`
+  font-size: 80px;
+  line-height: 80px;
+`
 
 /* FOOTER */
 export const Footer = styled.footer`
@@ -270,4 +295,5 @@ export const Footer = styled.footer`
   padding: 10px;
   font-size: 0.5rem;
   color: ${({ theme }) => theme.text};
+  border: 0.1px solid ${({ theme }) => theme.border};
 `;
