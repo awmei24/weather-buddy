@@ -200,7 +200,7 @@ export const Setting = styled.div`
 
 export const SettingLabel = styled.label`
   color: ${({ theme }) => theme.text};
-  font-weight: 800;
+  font-size: 18px;
 `;
 
 export const ToggleSwitch = styled.div`
@@ -250,10 +250,12 @@ export const ToggleOption = styled.span`
 
 export const LeftLabel = styled(ToggleOption)`
   left: 10px;
+  font-size: 14px;
 `;
 
 export const RightLabel = styled(ToggleOption)`
   right: 10px;
+  font-size: 14px;
 `;
 
 /* INFO PANE */
