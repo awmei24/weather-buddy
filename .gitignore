@@ -2,7 +2,7 @@
 .DS_Store
 
 node_modules
-eslint.config.js
-package-lock.json
-package.json
-vite.config.js
+# eslint.config.js
+# package-lock.json
+# package.json
+# vite.config.js
