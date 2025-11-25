@@ -12,7 +12,7 @@ export function SearchResults({ query, onSelect, onTopResult }) {
     }, [suggestions]);
 
     if (error) return <div className='search-error'>No suggestions found.</div>;
-    if (!suggestions.length) return <div className='search-no-results'>No suggestions found.</div>;
+    if (!suggestions.length) return <div className='search-no-results' style={{ fontSize: "18px" }}>No suggestions found.</div>;
 
     console.log(suggestions)
 
