@@ -98,6 +98,12 @@ export const SearchInput = styled.input`
   background-color: transparent;
   color: ${({ theme }) => theme.text};
   transition: width 0.4s ease, opacity 0.3s ease;
+
+  
+  &::placeholder {
+    font-family: "Jersey 15", sans-serif;
+    font-size: 16px;
+    opacity: 1;
 `;
 
 export const SearchResultsDropdown = styled.div`
