@@ -1,30 +1,46 @@
-import React, { useEffect } from 'react';
-import { SearchResultList, SearchResultItem } from '../styles.js';
-import { useAutocomplete } from '../hook.js';
+import React from 'react';
+import { SearchResultList, SearchResultItem, ResultName, ResultDetail, SearchStatus } from '../styles.js';
 
-export function SearchResults({ query, onSelect, onTopResult }) {
-    const { suggestions, error } = useAutocomplete(query);
-    
-    useEffect(() => {
-      if (suggestions.length > 0 && onTopResult) {
-        onTopResult(suggestions[0]);
-      }
-    }, [suggestions]);
-
-    if (error) return <div className='search-error'>No suggestions found.</div>;
-    if (!suggestions.length) return <div className='search-no-results' style={{ fontSize: "18px" }}>No suggestions found.</div>;
-
-    console.log(suggestions)
+// listId is the listbox's id; each option's id is `${listId}-${index}`
+export function SearchResults({ listId, query, suggestions, loading, error, activeIndex, onSelect, onHover }) {
+    if (error) {
+        return <SearchStatus role='status'>Couldn’t search right now.</SearchStatus>;
+    }
+    if (!suggestions.length) {
+        return (
+            <SearchStatus role='status'>
+                {loading ? 'Searching...' : `No places match “${query}”. Try a city name or ZIP code.`}
+            </SearchStatus>
+        );
+    }
 
     return (
-        <SearchResultList>
-            {suggestions.slice(0,5).map((item) => (
-                <SearchResultItem key={item.id} 
-                    onMouseDown={() => onSelect({ lat: item.lat, lon: item.lon })}
-                >
-                    {item.name}, {item.region}, {item.country}
-                </SearchResultItem>
-            ))}
+        <SearchResultList id={listId} role='listbox'>
+            {suggestions.map((item, index) => {
+                // Skip parts that are empty or repeat the place name
+                const detail = [item.region, item.country]
+                    .filter((part) => part && part !== item.name)
+                    .join(', ');
+
+                return (
+                    <SearchResultItem
+                        key={item.id}
+                        id={`${listId}-${index}`}
+                        role='option'
+                        aria-selected={index === activeIndex}
+                        $active={index === activeIndex}
+                        onMouseEnter={() => onHover(index)}
+                        onMouseDown={(e) => {
+                            // Keep focus in the input so the box doesn't close first
+                            e.preventDefault();
+                            onSelect(item);
+                        }}
+                    >
+                        <ResultName>{item.name}</ResultName>
+                        {detail && <ResultDetail>{detail}</ResultDetail>}
+                    </SearchResultItem>
+                );
+            })}
         </SearchResultList>
     );
 }
