@@ -20,6 +20,8 @@ function weatherProxy(endpoint, key) {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
+    // GitHub Pages serves the site from /weather-buddy/; Vercel and dev serve it from /
+    base: env.GITHUB_PAGES ? '/weather-buddy/' : '/',
     plugins: [react()],
     server: {
       proxy: {

@@ -1,5 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 
+// Where the weather proxy lives. Empty means same origin (local dev and the Vercel
+// deployment); the GitHub Pages build sets VITE_API_BASE to the Vercel URL.
+const API_BASE = (import.meta.env.VITE_API_BASE ?? '').replace(/\/$/, '');
+
 // useState that is saved to localStorage, so it survives reloads
 export function useStoredState(key, getDefault) {
     const [value, setValue] = useState(() => {
@@ -79,7 +83,7 @@ export function useWeather(latitude, longitude) {
 
         async function fetchAllWeather() {
             try {
-                const query = `/api/current?q=${encodeURIComponent(`${latitude},${longitude}`)}`;
+                const query = `${API_BASE}/api/current?q=${encodeURIComponent(`${latitude},${longitude}`)}`;
 
                 const res = await fetch(query, { signal: controller.signal });
                 const data = await res.json();
@@ -115,7 +119,7 @@ export function useAutocomplete(query) {
         // Debounce so we only search once the user pauses typing
         const timeout = setTimeout(async () => {
             try {
-                const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal: controller.signal });
+                const res = await fetch(`${API_BASE}/api/search?q=${encodeURIComponent(query)}`, { signal: controller.signal });
                 const data = await res.json();
                 if (!res.ok || !Array.isArray(data)) {
                     throw new Error(data.error?.message ?? `Search failed (${res.status})`);
